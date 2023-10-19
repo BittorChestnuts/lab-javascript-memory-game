@@ -38,16 +38,53 @@ window.addEventListener('load', (event) => {
     `;
   });
 
-  // Add all the divs to the HTML
+  // Add all the divs to the HTML -  pone las cartas
   document.querySelector('#memory-board').innerHTML = html;
 
   // Bind the click event of each element to a function
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
       // TODO: write some code here
-      
 
+      const clickedScore = document.querySelector("#pairs-clicked")
+      const guessedScore = document.querySelector("#pairs-guessed")
+
+        card.classList.add("turned")
+      memoryGame.pickedCards.push(card)
+
+      if (memoryGame.pickedCards.length === 2) {
+        const firstCard = memoryGame.pickedCards[0]
+        const secondCard = memoryGame.pickedCards[1]
+
+        const firstCartName = firstCard.getAttribute("data-card-name")
+        const secondCartName = secondCard.getAttribute("data-card-name")
+
+        const areTheyPairs = memoryGame.checkIfPair(firstCartName, secondCartName)
+
+        if (areTheyPairs) {
+          console.log("IT PAIRS");
+        }
+        else {
+          setTimeout(() => {
+            firstCard.classList.toggle("turned")
+            secondCard.classList.toggle("turned")
+          }, 1000)
+          console.log("NOT PAIRS");
+
+        }
       
+        memoryGame.pickedCards = []
+        clickedScore.innerText = `${memoryGame.pairsClicked}`
+        guessedScore.innerText = `${memoryGame.pairsGuessed}`
+
+        if (memoryGame.checkIfFinished()){
+          alert("Congrats")
+        }
+      }
+
+
+
+
       console.log(`Card clicked: ${card}`);
     });
   });

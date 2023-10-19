@@ -42,8 +42,15 @@ class MemoryGame {
   }
 
   checkIfFinished() {
+    const totalPairs = this.cards.length / 2;
+    if (this.pairsGuessed === totalPairs){
+      
+      return true
+    }
+    else{
+      return false
 
-    return false
+    }
     // ... write your code here
   }
 }
